@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mrp_production_batch_view_tree" model="ir.ui.view">
+        <field name="name">mrp.production.batch.view.tree</field>
+        <field name="model">mrp.production.batch</field>
+        <field name="arch" type="xml">
+            <tree string="MRP Batch">
+                <field name="name"/>
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+    <record id="mrp_production_batch_view_form" model="ir.ui.view">
+        <field name="name">mrp.production.batch.view.form</field>
+        <field name="model">mrp.production.batch</field>
+        <field name="arch" type="xml">
+            <form string="Tickets">
+                <header>
+                    <field name="state" widget="statusbar" clickable="True"/>                                        
+                </header>
+                <sheet>
+                    <h1><field name="name"/></h1>
+                    <group name="mrp" string="Ordenes de Fabricación">
+                        <field name="mrp_ids" widget="many2many_tags"/>
+                    </group>
+                    <group name="lot" string="Lotes">
+                        <field name="lot_ids" widget="many2many_tags"/>
+                    </group>
+                    <notebook>
+                        <page name="component" string="Componentes">
+                            <field name="move_raw_ids" widget="one2many_list"/>
+                        </page>
+                        <page name="workorder" string="Ordenes de Trabajo">
+                            <field name="workorder_ids" widget="one2many_list"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="mrp_production_batch_action" model="ir.actions.act_window">
+        <field name="name">Batch</field>
+        <field name="res_model">mrp.production.batch</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="view_id" eval="mrp_production_batch_view_tree"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            Add a new Batch
+            </p>
+        </field>
+    </record>
+    <menuitem
+        id="batch_mrp_menu"
+        name="Batch"
+        action="mrp_production_batch_action"
+        parent="mrp.menu_mrp_root"/>
+
+</odoo>
