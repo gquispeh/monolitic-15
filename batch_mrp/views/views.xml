@@ -21,11 +21,11 @@
                     <field name="state" widget="statusbar" clickable="True"/>                                        
                 </header>
                 <sheet>
-                    <h1><field name="name"/></h1>
-                    <group name="mrp" string="Ordenes de Fabricación">
+                    <h1><field string="Batch" name="name"/></h1>
+                    <group name="mrp">
                         <field name="mrp_ids" widget="many2many_tags"/>
                     </group>
-                    <group name="lot" string="Lotes">
+                    <group name="lot">
                         <field name="lot_ids" widget="many2many_tags"/>
                     </group>
                     <notebook>

@@ -42,11 +42,6 @@ class MrpProductionBatch(models.Model):
 
     @api.onchange('mrp_ids')
     def compute_mrps(self):
-        # lines = self.env['stock.move.line.details'].search(
-        #    [('line_id', '=', self.line_id.id)]).ids
-        #lines = []
-        #self.write({'subtask_ids': [(6, 0, lines)]})
-        #(6, 0, mo.workorder_ids.ids)
         workorder_ids = [_logger.info(mo)
                          for mo in self.mrp_ids]
 
