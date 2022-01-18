@@ -1,5 +1,8 @@
 from csv import unregister_dialect
 from odoo import api, fields, models
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class MrpProductionDetails(models.Model):
@@ -23,11 +26,32 @@ class MrpProductionBatch(models.Model):
         'mrp.workorder', string='Orden de Trabajo')
 
     state = fields.Selection([
-        ('1', 'draft'),
-        ('2', 'in_progress'),
-        ('3', 'done'),
-        ('4', 'cancel')
-    ], string='Estado')
+        ('1', 'Borrador'),
+        ('2', 'En progreso'),
+        ('3', 'Contando'),
+        ('4', 'Fin del conteo'),
+        ('5', 'Hecho'),
+        ('6', 'Cancelado')
+    ], default='1', string='Estado')
+
+    def iniciar_conteo_tiempo(self):
+        pass
+
+    def finalizar_conteo_tiempo(self):
+        pass
+
+    @api.onchange('mrp_ids')
+    def compute_mrps(self):
+        # lines = self.env['stock.move.line.details'].search(
+        #    [('line_id', '=', self.line_id.id)]).ids
+        #lines = []
+        #self.write({'subtask_ids': [(6, 0, lines)]})
+        #(6, 0, mo.workorder_ids.ids)
+        workorder_ids = [_logger.info(mo)
+                         for mo in self.mrp_ids]
+
+        _logger.info('**********')
+        _logger.info(workorder_ids)
 
 
 class StockMoveLineDetails(models.Model):

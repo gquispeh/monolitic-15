@@ -16,6 +16,8 @@
         <field name="arch" type="xml">
             <form string="Tickets">
                 <header>
+                    <button string="Start" name="iniciar_conteo_tiempo" type="object" class="oe_highlight"/>
+                    <button string="Stop" name="finalizar_conteo_tiempo" type="object"/>
                     <field name="state" widget="statusbar" clickable="True"/>                                        
                 </header>
                 <sheet>
@@ -28,7 +30,16 @@
                     </group>
                     <notebook>
                         <page name="component" string="Componentes">
-                            <field name="move_raw_ids" widget="one2many_list"/>
+                            <field name="move_raw_ids" widget="one2many_list">
+                                <tree editable="top" create="1" delete="1">
+                                    <field name="equipo_lot_id" string="Equipo" optional="show" readonly="1"/>
+                                    <field name="user_id" optional="hide" readonly="1"/>
+                                    <field name="mrp_id" optional="hide" readonly="1"/>
+                                    <field name="product_id" optional="show" readonly="1"/>
+                                    <field name="cantidad" optional="hide" readonly="1"/>
+                                    <field name="serie_componente" optional="show"/>
+                                </tree>
+                            </field>
                         </page>
                         <page name="workorder" string="Ordenes de Trabajo">
                             <field name="workorder_ids" widget="one2many_list"/>
