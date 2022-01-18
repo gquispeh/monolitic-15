@@ -22,11 +22,13 @@
                 </header>
                 <sheet>
                     <h1><field name="name"/></h1>
-                    <group name="mrp" string="Ordenes de Fabricación">
+                    <group name="mrp">
                         <field name="mrp_ids" widget="many2many_tags"/>
                     </group>
-                    <group name="lot" string="Lotes">
+                    <group name="lot">
                         <field name="lot_ids" widget="many2many_tags"/>
+                        <field name="lote_inicio" />
+                        <field name="lote_final" />
                     </group>
                     <notebook>
                         <page name="component" string="Componentes">
@@ -42,7 +44,7 @@
                             </field>
                         </page>
                         <page name="workorder" string="Ordenes de Trabajo">
-                            <field name="workorder_ids" widget="one2many_list"/>
+                            <field name="workorder_ids" readonly="1" widget="one2many_list"/>
                         </page>
                     </notebook>
                 </sheet>
