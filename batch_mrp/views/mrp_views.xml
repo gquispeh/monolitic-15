@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mrp_production_form_view_inherit_batch" model="ir.ui.view">
+		<field name="name">mrp.production.inherit.batch</field>
+		<field name="model">mrp.production</field>
+		<field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+		<field name="arch" type="xml">
+			<data>
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button type="object" name="action_view_batch" class="oe_stat_button" icon="fa-dropbox">
+                        <span>Open Batch</span>
+                    </button>
+                </xpath>
+				<!--xpath expr="//page[@name='operations']" position="inside">
+					<field name="workorder_ids" attrs="{'readonly': [('state', 'in', ['cancel', 'done'])]}" context="{'tree_view_ref': 'mrp.mrp_production_workorder_tree_editable_view', 'default_product_uom_id': product_uom_id}"/>
+				</xpath-->
+			</data>
+		</field>
+	</record>
+	<record id="mrp_production_workorder_tree_editable_view_inherit_batch" model="ir.ui.view">
+		<field name="name">mrp.production.workorder.tree.editable_view.inherit.batch</field>
+		<field name="model">mrp.workorder</field>
+		<field name="inherit_id" ref="mrp.mrp_production_workorder_tree_editable_view"/>
+		<field name="arch" type="xml">
+			<data>
+				<xpath expr="//field[@name='workcenter_id']" position="before">
+					<field name="proceso"/>
+				</xpath>
+			</data>
+		</field>
+	</record>
+</odoo>

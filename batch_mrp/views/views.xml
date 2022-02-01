@@ -10,14 +10,27 @@
             </tree>
         </field>
     </record>
+    <record id="stock_move_line_details_view_tree" model="ir.ui.view">
+        <field name="name">stock.move.line.details.view.tree</field>
+        <field name="model">stock.move.line.details</field>
+        <field name="arch" type="xml">
+            <tree string="MRP Batch">
+                <field name="name"/>
+                <field name="mrp_id" />
+                <field name="equipo_lot_id" />
+                <field name="product_id" />
+                <field name="cantidad" />
+                <field name="serie_componente" />
+            </tree>
+        </field>
+    </record>
     <record id="mrp_production_batch_view_form" model="ir.ui.view">
         <field name="name">mrp.production.batch.view.form</field>
         <field name="model">mrp.production.batch</field>
         <field name="arch" type="xml">
             <form string="Tickets">
                 <header>
-                    <button string="Start" name="iniciar_conteo_tiempo" type="object" class="oe_highlight"/>
-                    <button string="Stop" name="finalizar_conteo_tiempo" type="object"/>
+                    <button string="Imputar Tiempos" name="imputar_tiempos" type="object" class="oe_highlight"/>
                     <field name="state" widget="statusbar" clickable="True"/>                                        
                 </header>
                 <sheet>
@@ -27,8 +40,8 @@
                     </group>
                     <group name="lot">
                         <field name="lot_ids" widget="many2many_tags"/>
-                        <field name="lote_inicio" />
-                        <field name="lote_final" />
+                        <field name="lote_inicio" invisible="1"/>
+                        <field name="lote_final" invisible="1"/>
                     </group>
                     <notebook>
                         <page name="component" string="Componentes">
@@ -48,8 +61,38 @@
                         </page>
                     </notebook>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
             </form>
         </field>
+    </record>
+    <record id="wizard_workorder_view_form" model="ir.ui.view">
+        <field name="name">wizard.batch.workorder.view.form</field>
+        <field name="model">wizard.batch.workorder</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <script>
+                    $(document).ready(function(){
+                        $('.modal-content').css({'width': '1000px', 'left':'166px'});
+                    }); 
+                    </script>
+                    <group>
+                        <field name="name" invisible="1"/>
+                        <field name="proceso" />
+                        <field name="workorder_ids" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="wizard_batch_workorder_action" model="ir.actions.act_window">
+        <field name="name">Tiempos Ordenes de Trabajo</field>
+        <field name="res_model">wizard.batch.workorder</field>
+        <field name="view_mode">form</field>
     </record>
     <record id="mrp_production_batch_action" model="ir.actions.act_window">
         <field name="name">Batch</field>
@@ -63,10 +106,32 @@
             </p>
         </field>
     </record>
+    <record id="stock_move_line_details_action" model="ir.actions.act_window">
+        <field name="name">Move Line Details</field>
+        <field name="res_model">stock.move.line.details</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="view_id" eval="stock_move_line_details_view_tree"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            Add a new Details
+            </p>
+        </field>
+    </record>
+    <menuitem
+        id="main_batch_and_details_menu"
+        name="Batch and Details"
+        sequence="10"
+        parent="mrp.menu_mrp_root"/>
     <menuitem
         id="batch_mrp_menu"
         name="Batch"
         action="mrp_production_batch_action"
-        parent="mrp.menu_mrp_root"/>
+        parent="main_batch_and_details_menu"/>
+    <menuitem
+        id="details_mrp_menu"
+        name="Details"
+        action="stock_move_line_details_action"
+        parent="main_batch_and_details_menu"/>
 
 </odoo>
